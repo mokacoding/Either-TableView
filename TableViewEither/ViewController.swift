@@ -36,8 +36,8 @@ extension ViewController: UITableViewDataSource {
 
     let identifier: String = {
       switch item {
-      case .Left(_): return pizzaCellIdentifier
-      case .Right(_): return adCellIdentifier
+      case .Left: return pizzaCellIdentifier
+      case .Right: return adCellIdentifier
       }
     }()
 
@@ -45,15 +45,23 @@ extension ViewController: UITableViewDataSource {
 
     switch item {
     case .Left(let pizza):
-      cell.textLabel?.text = "\(pizza.name) ($\(pizza.price))"
+      configure(cell, with: pizza)
     case .Right(let ad):
-      cell.textLabel?.text = ad.message
-      cell.textLabel?.textColor = UIColor.white()
-      cell.textLabel?.backgroundColor = UIColor.clear()
-      cell.contentView.backgroundColor = ad.color
-      cell.textLabel?.textAlignment = .center
+      configure(cell, with: ad)
     }
 
     return cell
+  }
+
+  private func configure(_ cell: UITableViewCell, with pizza: Pizza) {
+    cell.textLabel?.text = "\(pizza.name) ($\(pizza.price))"
+  }
+
+  private func configure(_ cell: UITableViewCell, with ad: Ad) {
+    cell.textLabel?.text = ad.message
+    cell.textLabel?.textColor = UIColor.white()
+    cell.textLabel?.backgroundColor = UIColor.clear()
+    cell.contentView.backgroundColor = ad.color
+    cell.textLabel?.textAlignment = .center
   }
 }
